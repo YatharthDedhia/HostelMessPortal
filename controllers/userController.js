@@ -1,6 +1,7 @@
 const errorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const User = require('../models/User');
+const Meal = require('../models/Meal');
 const sendToken = require('../utils/jwttoken');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require("crypto");
@@ -44,6 +45,8 @@ const registerUser = catchAsyncErrors(async (req, res, next) => {
 
         sendToken(user, 201, res);
     });
+
+
 });
 
 //Login User
@@ -232,6 +235,14 @@ const deleteUser = catchAsyncErrors(async (req, res, next) => {
     sendToken(user, 200, res);
 });
 
+const getUserInfo = catchAsyncErrors(async (req, res, next) => {
+    const { email } = req.body
+    const user = await User.findOne({ "email": email });
+    console.log(user._id);
+    // const meals = await Meal.find();
+    res.status(201).json({ "userid": user._id })
+})
+
 module.exports = {
     registerUser,
     loginUser,
@@ -244,5 +255,6 @@ module.exports = {
     getAllUser,
     getSingleUser,
     updateUserRole,
-    deleteUser
+    deleteUser,
+    getUserInfo
 }

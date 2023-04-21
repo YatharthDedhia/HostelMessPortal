@@ -12,12 +12,22 @@ const getAllMeals = catchAsyncErrors(async (req, res, next) => {
 
 const addMeal = catchAsyncErrors(async (req, res, next) => {
     const { date, item, price, amount, mealType } = req.body
-
-    if (!date || !item || !price || !amount || !mealType) {x
+    if (!date || !item || !price || !amount || !mealType) {
         return next(new errorHandler("All fields required", 400))
     }
+
+    const meal = await Meal.create({
+        date, item, price, mealType
+    });
+
+    console.log(meal);
+    res.status(201).json({
+        success: true,
+        meal
+    })
 })
 
 module.exports = {
-    getAllMeals
+    getAllMeals,
+    addMeal
 }

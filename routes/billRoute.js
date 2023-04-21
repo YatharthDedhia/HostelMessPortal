@@ -4,8 +4,7 @@ const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.route('/meals')
-    .get(mealController.getAllMeals)
+router.route('/bill')
     .post(isAuthenticatedUser, authorizeRoles("admin"), mealController.addMeal)
 
 module.exports = router;

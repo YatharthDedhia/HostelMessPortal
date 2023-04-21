@@ -35,4 +35,7 @@ router.route("/admin/user/:id")
     .put(isAuthenticatedUser, authorizeRoles("admin"), userController.updateUserRole)
     .delete(isAuthenticatedUser, authorizeRoles("admin"), userController.deleteUser);
 
+router.route("/admin/userinfo")
+    .post(isAuthenticatedUser, authorizeRoles("admin"), userController.getUserInfo)
+
 module.exports = router;

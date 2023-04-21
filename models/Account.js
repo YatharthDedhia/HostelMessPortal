@@ -14,7 +14,7 @@ const accountSchema = new mongoose.Schema({
     leaves: [{
         startDate: {
             type: Date,
-            required: true
+            required: false
         },
         endDate: {
             type: Date,
@@ -22,17 +22,17 @@ const accountSchema = new mongoose.Schema({
         },
         mealType: {
             type: String,
-            require: true
+            require: false
         }
     }],
     deposits: [{
         date: {
             type: Date,
-            require: true
+            require: false
         },
         amount:{
             type:Number,
-            require:trueu
+            require:false
         }
     }],
     amount: {
