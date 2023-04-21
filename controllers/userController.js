@@ -4,15 +4,27 @@ const User = require('../models/User');
 const sendToken = require('../utils/jwttoken');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require("crypto");
+const bcrypt = require("bcrypt")
+const jwt = require('jsonwebtoken')
 const barcode = require("barcode-secure")
-const getResetPasswordToken = require('../models/User')
 
-//register user
+// Register user
 const registerUser = catchAsyncErrors(async (req, res, next) => {
     const { firstname, lastname, batch, stream, email, password, role, idcard, avatar } = req.body;
 
+    if (!firstname || !lastname || !batch || !stream || !email || !password || !role || !idcard) {
+        return next(new errorHandler("All fields required", 400))
+    }
+
+    const duplicate = await User.findOne({ email }).lean().exec()
+    if (duplicate) {
+        return next(new errorHandler("User already present", 409))
+    }
+
+    const HashedPwd = await bcrypt.hash(password, 10) //salt rounds
+
     const code39 = barcode('code39', {
-        data: password,
+        data: HashedPwd,
         width: 400,
         height: 100,
     });
@@ -22,12 +34,14 @@ const registerUser = catchAsyncErrors(async (req, res, next) => {
         const user = await User.create({
             firstname, lastname,
             batch, stream,
-            email, password,
+            email,
+            "password": HashedPwd,
             role, idcard,
-            imgsrc,
+            "barcode": imgsrc,
             avatar,
         });
         console.log(user)
+
         sendToken(user, 201, res);
     });
 });
@@ -40,12 +54,12 @@ const loginUser = catchAsyncErrors(async (req, res, next) => {
     }
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
-        return next(new errorHandler("Invalid email or Password", 401));
+        return next(new errorHandler("Invalid email", 401));
     }
-    const isPasswordMatched = await user.comparePassword(password);
+    const isPasswordMatched = await bcrypt.compare(password, user.password)
 
     if (!isPasswordMatched) {
-        return next(new errorHandler("Invalid email or Password", 401));
+        return next(new errorHandler("Invalid Password", 401));
     }
     sendToken(user, 200, res);
 })
@@ -116,7 +130,6 @@ const resetPassword = catchAsyncErrors(async (req, res, next) => {
 
     await user.save();
     sendToken(user, 200, res);
-
 
 });
 

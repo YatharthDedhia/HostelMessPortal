@@ -12,7 +12,7 @@ router.route("/login")
 router.route("/password/forgot")
     .post(userController.forgotPassword);
 
-router.route("/password/reset/:token")
+router.route("/password/:token")
     .put(userController.resetPassword);
 
 router.route("/logout")

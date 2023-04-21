@@ -12,13 +12,27 @@ const accountSchema = new mongoose.Schema({
         ref: 'Meal'
     }],
     leaves: [{
-        date: {
+        startDate: {
             type: Date,
             required: true
+        },
+        endDate: {
+            type: Date,
+            required: false
         },
         mealType: {
             type: String,
             require: true
+        }
+    }],
+    deposits: [{
+        date: {
+            type: Date,
+            require: true
+        },
+        amount:{
+            type:Number,
+            require:trueu
         }
     }],
     amount: {

@@ -2,23 +2,26 @@
 
 ## Routes:
 User Routes:
-- [ ] /register
-- [ ] /login
-- [ ] /password/forgot
-- [ ] /password/reset/:token
-- [ ] /logout
-- [ ] /password/update
+- [x] /register
+- [x] /login
+- [x] /password/forgot
+- [x] /password/reset/:token
+- [x] /logout
+- [x] /password/update
+- [ ] /leave
+- [ ] /deposit
   
 Profile:
-- [ ] /me/update
-- [ ] /me
+- [x] /me/update
+- [x] /me
 
 Admin:
-- [ ] /admin/users
+- [x] /admin/users
 - [ ] /admin/user/:id
+- [ ] /admin/meals (create new meal)
 
 Bill Generate:
-- [ ] /bill/:id
+- [ ] /bill/ (append all meals - leave meals in account)
 
 List all meals:
 - [ ] /meals
