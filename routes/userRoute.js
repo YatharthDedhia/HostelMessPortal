@@ -1,16 +1,38 @@
 const express = require('express');
-const { registerUser, loginUser, logOut, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile, getSingleUser, getAllUser, updateUserRole, deleteUser } = require("../controllers/userController");
+const userController = require('../controllers/userController')
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
-router.route("/register").post(registerUser);
-router.route("/login").post(loginUser);
-router.route("/password/forgot").post(forgotPassword);
-router.route("/password/reset/:token").put(resetPassword);
-router.route("/logout").get(logOut);
-router.route("/password/update").put(isAuthenticatedUser, updatePassword);
-router.route("/me/update").put(isAuthenticatedUser, updateProfile);
-router.route("/me").get(isAuthenticatedUser, getUserDetails);
 
-router.route("/admin/users").get(isAuthenticatedUser, authorizeRoles("admin"), getAllUser);
-router.route("/admin/user/:id").get(isAuthenticatedUser, authorizeRoles("admin"), getSingleUser).put(isAuthenticatedUser, authorizeRoles("admin"), updateUserRole).delete(isAuthenticatedUser, authorizeRoles("admin"), deleteUser);
+router.route("/register")
+    .post(userController.registerUser);
+
+router.route("/login")
+    .post(userController.loginUser);
+
+router.route("/password/forgot")
+    .post(userController.forgotPassword);
+
+router.route("/password/reset/:token")
+    .put(userController.resetPassword);
+
+router.route("/logout")
+    .get(userController.logOut);
+
+router.route("/password/update")
+    .put(isAuthenticatedUser, userController.updatePassword);
+
+router.route("/me/update")
+    .put(isAuthenticatedUser, userController.updateProfile);
+
+router.route("/me")
+    .get(isAuthenticatedUser, userController.getUserDetails);
+
+router.route("/admin/users")
+    .get(isAuthenticatedUser, authorizeRoles("admin"), userController.getAllUser);
+
+router.route("/admin/user/:id")
+    .get(isAuthenticatedUser, authorizeRoles("admin"), userController.getSingleUser)
+    .put(isAuthenticatedUser, authorizeRoles("admin"), userController.updateUserRole)
+    .delete(isAuthenticatedUser, authorizeRoles("admin"), userController.deleteUser);
+
 module.exports = router;
