@@ -7,7 +7,8 @@ const sendEmail = require('../utils/sendEmail');
 const crypto = require("crypto");
 const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken')
-const barcode = require("barcode-secure")
+const barcode = require("barcode-secure");
+const Account = require('../models/Account');
 
 // Register user
 const registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -43,6 +44,11 @@ const registerUser = catchAsyncErrors(async (req, res, next) => {
         });
         console.log(user)
 
+        const account = await Account.create({
+            "user":user._id,
+            
+        });
+        console.log(account);
         sendToken(user, 201, res);
     });
 

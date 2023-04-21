@@ -9,6 +9,8 @@ const user = require('./routes/userRoute');
 const meal = require('./routes/mealRoute');
 // app.use("/api/v1", product);
 app.use("/api/v1", user);
+const account = require('./routes/accountRoute');
+app.use("/api/v1", account);
 app.use("/api/v1", meal);
 // app.use("/api/v1", order);
 app.use(errorMiddleware);

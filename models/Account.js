@@ -22,19 +22,19 @@ const accountSchema = new mongoose.Schema({
         },
         mealType: {
             type: String,
-            require: false
+            required: false
         }
     }],
     deposits: [{
         date: {
             type: Date,
-            require: false
+            required: false
         },
         amount:{
             type:Number,
-            require:false
+            required:false
         }
-    }],
+    },{ _id: true, timestamps: true, toJSON: { virtuals: true }, id: false }],
     amount: {
         type: Number,
         default: 0
