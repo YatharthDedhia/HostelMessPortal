@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const mealSchema = new mongoose.Schema({
     date: {
-        type: String,
+        type: Date,
         require: true
     },
     item: {

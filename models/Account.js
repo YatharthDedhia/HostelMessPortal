@@ -13,12 +13,13 @@ const accountSchema = new mongoose.Schema({
     }],
     leaves: [{
         startDate: {
-            type: Date,
+            type: String,
             required: false
         },
         endDate: {
-            type: Date,
-            required: false
+            type: String,
+            required: false,
+            default: ""
         },
         mealType: {
             type: String,
@@ -30,11 +31,11 @@ const accountSchema = new mongoose.Schema({
             type: Date,
             required: false
         },
-        amount:{
-            type:Number,
-            required:false
+        amount: {
+            type: Number,
+            required: false
         }
-    },{ _id: true, timestamps: true, toJSON: { virtuals: true }, id: false }],
+    }, { _id: true, timestamps: true, toJSON: { virtuals: true }, id: false }],
     amount: {
         type: Number,
         default: 0

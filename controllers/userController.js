@@ -45,8 +45,8 @@ const registerUser = catchAsyncErrors(async (req, res, next) => {
         console.log(user)
 
         const account = await Account.create({
-            "user":user._id,
-            
+            "user": user._id,
+
         });
         console.log(account);
         sendToken(user, 201, res);
@@ -244,9 +244,28 @@ const deleteUser = catchAsyncErrors(async (req, res, next) => {
 const getUserInfo = catchAsyncErrors(async (req, res, next) => {
     const { email } = req.body
     const user = await User.findOne({ "email": email });
+    if (!user)
+        return next(new errorHandler(`User does not exist`, 400));
+
     console.log(user._id);
-    // const meals = await Meal.find();
-    res.status(201).json({ "userid": user._id })
+    const acc = await Account.findOne({ "user": user._id })
+    if (!acc)
+        return next(new errorHandler(`Account does not exist`, 400));
+
+    // if (acc.leaves.length == 0) {
+    var meals = await Meal.find()
+    meals.forEach(async (element) => {
+        await Account.findOneAndUpdate(
+            { "user": user._id },
+            {
+                $push: { meals: element }
+            }
+        );
+    })
+    // }
+
+    console.log(acc)
+    res.status(201).json({ acc })
 })
 
 module.exports = {
