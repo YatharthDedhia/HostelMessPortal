@@ -6,7 +6,6 @@ const sendToken = require('../utils/jwttoken');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require("crypto");
 const bcrypt = require("bcrypt")
-const barcode = require("barcode-secure");
 const jsbarcode = require("jsbarcode");
 const { createCanvas } = require('canvas');
 const Account = require('../models/Account');
@@ -25,12 +24,6 @@ const registerUser = catchAsyncErrors(async (req, res, next) => {
     }
 
     const HashedPwd = await bcrypt.hash(password, 10) //salt rounds
-
-    const code39 = barcode('code39', {
-        data: HashedPwd,
-        width: 400,
-        height: 100,
-    });
 
     const canvas = createCanvas();
     jsbarcode(canvas, HashedPwd, { format: 'CODE39' });
