@@ -17,11 +17,11 @@ Profile:
 
 Admin:
 - [x] /admin/users
-- [ ] /admin/user/:id
-- [x] /admin/meals (create new meal)
+- [x] /admin/userinfo
+- [x] /admin/meals
 
 Bill Generate:
-- [ ] /bill/ (append all meals - leave meals in account)
+- [ ] /bill/
 
 List all meals:
 - [x] /meals

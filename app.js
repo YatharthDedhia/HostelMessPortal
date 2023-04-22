@@ -7,11 +7,12 @@ app.use(cookieParser());
 // const product = require('./routes/productRoute');
 const user = require('./routes/userRoute');
 const meal = require('./routes/mealRoute');
+const account = require('./routes/accountRoute');
 // app.use("/api/v1", product);
 app.use("/api/v1", user);
-const account = require('./routes/accountRoute');
 app.use("/api/v1", account);
 app.use("/api/v1", meal);
+// app.use(bill)
 // app.use("/api/v1", order);
 app.use(errorMiddleware);
 

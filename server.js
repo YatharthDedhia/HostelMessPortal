@@ -20,6 +20,10 @@ process.on("uncaughtException", (err) => {
 //Config
 dotenv.config({ path: "config/config.env" })
 connectDatabase();
+
+const sendBillCron = require('./middleware/monthlyBill');
+sendBillCron.sendBill();
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is working on http://localhost:${process.env.PORT}`);
 })

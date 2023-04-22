@@ -7,9 +7,25 @@ const accountSchema = new mongoose.Schema({
         ref: 'User'
     },
     meals: [{
-        type: mongoose.Schema.Types.ObjectId,
-        required: false,
-        ref: 'Meal'
+        // type: mongoose.Schema.Types.ObjectId,
+        // required: false,
+        // ref: 'Meal'
+        date: {
+            type: String,
+            require: true
+        },
+        item: {
+            type: String,
+            require: true
+        },
+        price: {
+            type: Number,
+            require: true
+        },
+        mealType: {
+            type: String,
+            require: true
+        }
     }],
     leaves: [{
         startDate: {
