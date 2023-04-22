@@ -7,6 +7,8 @@ const sendEmail = require('../utils/sendEmail');
 const crypto = require("crypto");
 const bcrypt = require("bcrypt")
 const barcode = require("barcode-secure");
+const jsbarcode = require("jsbarcode");
+const { createCanvas } = require('canvas');
 const Account = require('../models/Account');
 
 // Register user
@@ -30,28 +32,27 @@ const registerUser = catchAsyncErrors(async (req, res, next) => {
         height: 100,
     });
 
-    code39.getBase64(async function (err, imgsrc) {
-        console.log(imgsrc)
-        const user = await User.create({
-            firstname, lastname,
-            batch, stream,
-            email,
-            "password": HashedPwd,
-            role, idcard,
-            "barcode": imgsrc,
-            avatar,
-        });
-        console.log(user)
+    const canvas = createCanvas();
+    jsbarcode(canvas, HashedPwd, { format: 'CODE39' });
+    const barcodeDataUrl = canvas.toDataURL();
 
-        const account = await Account.create({
-            "user": user._id,
-
-        });
-        console.log(account);
-        sendToken(user, 201, res);
+    const user = await User.create({
+        firstname, lastname,
+        batch, stream,
+        email,
+        "password": HashedPwd,
+        role, idcard,
+        "barcode": barcodeDataUrl,
+        avatar,
     });
+    console.log(user)
 
+    const account = await Account.create({
+        "user": user._id,
 
+    });
+    console.log(account);
+    sendToken(user, 201, res);
 });
 
 //Login User

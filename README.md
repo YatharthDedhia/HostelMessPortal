@@ -21,12 +21,7 @@ Admin:
 - [x] /admin/meals
 
 Bill Generate:
-- [ ] /bill/
+- [x] bill automation
 
 List all meals:
 - [x] /meals
-
-## TO DO:
-1. Barcode
-2. Schedule
-3. Monthly Meals in getAllMeals
