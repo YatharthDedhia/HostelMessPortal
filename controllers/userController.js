@@ -258,7 +258,11 @@ const getUserInfo = catchAsyncErrors(async (req, res, next) => {
         return new Date(parts[2], parts[1] - 1, parts[0]);
     }
 
-    var meals = await Meal.find()
+    var meals = await Meal.find({
+        "date": {
+            "$regex": "^[0-9]{2}/" + (new Date().getMonth() + 1).toString().padStart(2, '0') + "/" + new Date().getFullYear() + "$"
+        }
+    })
 
     await Account.findOneAndUpdate(
         { "user": user._id },

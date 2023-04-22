@@ -8,8 +8,8 @@ User Routes:
 - [x] /password/reset/:token
 - [x] /logout
 - [x] /password/update
-- [ ] /leave 
-- [ ] /deposit
+- [x] /leave 
+- [x] /deposit
 
 Profile:
 - [x] /me/update
@@ -25,3 +25,8 @@ Bill Generate:
 
 List all meals:
 - [x] /meals
+
+## TO DO:
+1. Barcode
+2. Schedule
+3. Monthly Meals in getAllMeals
