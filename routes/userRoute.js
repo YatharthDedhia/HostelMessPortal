@@ -36,6 +36,6 @@ router.route("/admin/user/:id")
     .delete(isAuthenticatedUser, authorizeRoles("admin"), userController.deleteUser);
 
 router.route("/admin/userinfo")
-    .post(userController.getUserInfo)
+    .post(isAuthenticatedUser, authorizeRoles("admin"),userController.getUserInfo)
 
 module.exports = router;

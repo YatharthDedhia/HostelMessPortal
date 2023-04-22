@@ -18,8 +18,7 @@ const accountSchema = new mongoose.Schema({
         },
         endDate: {
             type: String,
-            required: false,
-            default: ""
+            required: false
         },
         mealType: {
             type: String,
